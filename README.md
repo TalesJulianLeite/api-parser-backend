@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/TALESJULIAN/api-parser-backend.svg?branch=master)](https://travis-ci.org/TALESJULIAN/api-parser-backend)
 # api_parser-backend
 API to parser a Quaker's 3 log
 
