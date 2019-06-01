@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/TALESJULIAN/api-parser-backend.svg?branch=master)](https://travis-ci.org/TALESJULIAN/api-parser-backend)
 # api_parser-backend
-API to parser a Quaker's 3 log
+Backend api to parser a log file and send a response
 
 Autor: Tales Julian Leite
 Date: 2019/05/26
