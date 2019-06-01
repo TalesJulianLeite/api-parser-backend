@@ -5,10 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
 
@@ -45,16 +43,12 @@ public class LogParserUtils {
 	        	Game game = new Game();
 	        	game.setNumber(id_game);
 	        	game.setGame_shutdown(false);
-	        	
 	        	game.setPlayers(players);
 	        	game.setTotal_kills(0);
 	        	this.games.add(game);
         }
         else if(line.contains("ClientUserinfoChanged:")) {
         	String[] line_split = line.split(":");
-				if(id_game == 1) {
-					System.out.println("Game 1");
-				}
 				int player_id;
 				String player_name = null;
 				player_id = Integer.parseInt(line_split[2].trim().substring(0, 1));
