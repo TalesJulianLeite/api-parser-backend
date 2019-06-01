@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="player")
+@Table(name = "player")
 public class Player implements Serializable{
 
 	/**
@@ -80,8 +80,9 @@ public class Player implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Player [number=" + number + ", name=" + name + ", kills=" + kills + "]";
+		return "Player [name=" + name + ", kills=" + kills + "]";
 	}
+
 	
 
 }
