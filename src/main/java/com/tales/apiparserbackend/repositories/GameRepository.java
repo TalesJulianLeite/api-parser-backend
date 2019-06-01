@@ -11,5 +11,5 @@ public interface GameRepository extends JpaRepository<Game, Long>{
 	List<Game> findAll();
 	
 	Game findGameByNumber(Integer number);
-
+	
 }

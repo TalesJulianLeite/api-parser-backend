@@ -37,12 +37,12 @@ public class Game implements Serializable{
 	/**
 	 * 
 	 * @param id
-	 * @param Nnumber
+	 * @param number
 	 * @param total_kills
 	 * @param players
 	 */
-	public Game(Integer game_number, Integer total_kills, List<Player> players) {
-		this.number = game_number;
+	public Game(Integer number, Integer total_kills, List<Player> players) {
+		this.number = number;
 		this.total_kills = total_kills;
 		this.players = players;
 	}
@@ -67,7 +67,7 @@ public class Game implements Serializable{
 		this.number = game_number;
 	}
 
-	@Column(name="total_kills", nullable = false)
+	@Column(name="total_kills", nullable = true)
 	public Integer getTotal_kills() {
 		return total_kills;
 	}
