@@ -5,14 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
+import com.tales.apiparserbackend.services.impl.GameServiceImpl;
+import com.tales.apiparserbackend.services.impl.PlayerServiceImpl;
 
 public class LogParserUtils {
 	
 	private static final Logger log = LoggerFactory.getLogger(LogParserUtils.class);
+	
+	@Autowired
+	private PlayerServiceImpl playerService;
+	
+	@Autowired
+	private GameServiceImpl gameService;
 	
 	private List<Game> games;
 	private int id_game;
@@ -114,7 +125,9 @@ public class LogParserUtils {
         		setListPlayers();
         		games.get(id_game-1).setPlayers(players);
         		games.get(id_game-1).setTotal_kills(total_kills);
-
+        		Game game = new Game();
+        		game = games.get(id_game-1);
+        		gameService.persistir(game);
         	}
         }
 	}
@@ -166,6 +179,7 @@ public class LogParserUtils {
 		if(!this.games.get(id_game-1).isGame_shutdown()) {
 			for(@SuppressWarnings("rawtypes") Map.Entry p : this.mapPlayers.entrySet()) {
 				this.players.add((Player) p.getValue());
+        		playerService.persistir((Player) p.getValue());
 			}
 			this.games.get(id_game-1).setGame_shutdown(true);
 		}

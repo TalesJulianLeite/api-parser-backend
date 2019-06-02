@@ -2,12 +2,10 @@ package com.tales.apiparserbackend.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.tales.apiparserbackend.entities.Game;
 
 public interface GameService {
 
-	
 	/**
 	 * Return all games
 	 * @return

@@ -32,6 +32,7 @@ public class GameServiceTest {
 	
 	private static final Integer number = 2;
 	
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() throws Exception {
 		BDDMockito.given(this.gameRepository.findGameByNumber(Mockito.anyInt())).willReturn(new Game());

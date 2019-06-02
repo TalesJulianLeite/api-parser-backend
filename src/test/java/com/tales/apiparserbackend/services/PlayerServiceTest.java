@@ -37,6 +37,7 @@ public class PlayerServiceTest {
 	
 	private static final String name = "Isgalamido";
 	
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() throws Exception {
 		BDDMockito.given(this.playerRepository.findPlayerByNumber(Mockito.anyInt())).willReturn(new Player());
@@ -68,6 +69,10 @@ public class PlayerServiceTest {
 		Player player = this.playerService.persistir(new Player());
 
 		assertNotNull(player);
+	}
+
+	public static Integer getGamenumber() {
+		return gameNumber;
 	}
 
 }
