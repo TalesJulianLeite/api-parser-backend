@@ -12,7 +12,6 @@ import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
 import com.tales.apiparserbackend.repositories.PlayerRepository;
 
