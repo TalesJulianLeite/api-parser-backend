@@ -23,6 +23,14 @@ public class LogParserUtils {
 	private Matcher matchPlayer;
 	HashMap<Integer, Player> mapPlayers;
 	
+	public LogParserUtils() {
+		this.games = null;
+		this.id_game = 0;
+		this.total_kills = 0;
+		this.players = null;
+		this.mapPlayers = null;
+	}
+	
 	public LogParserUtils(List<Game> games) {
 		this.games = games;
 		this.id_game = 0;
