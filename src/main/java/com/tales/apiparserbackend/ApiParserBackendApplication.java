@@ -4,11 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"com.tales.apiparserbackend.repositories", "com.tales.apiparserbackend.services,"
+@ComponentScan({"com.tales.apiparserbackend.services,"
 		+ "com.tales.apiparserbackend.services.impl", "com.tales.apiparserbackend.utils"})
 @EntityScan("com.tales.apiparserbackend.entities")
+@EnableJpaRepositories("com.tales.apiparserbackend.repositories")
 public class ApiParserBackendApplication {
 
 	public static void main(String[] args) {
