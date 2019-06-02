@@ -32,6 +32,4 @@ public interface PlayerRepository extends JpaRepository<Player, Long>{
 	
 	Player findPlayerByName(String name);
 	
-	Player persist(Player player);
-	
 }

@@ -13,7 +13,7 @@ import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.repositories.GameRepository;
 import com.tales.apiparserbackend.services.GameService;
 
-
+@Service
 public class GameServiceImpl implements GameService{
 	
 	private static final Logger log = LoggerFactory.getLogger(GameServiceImpl.class);
