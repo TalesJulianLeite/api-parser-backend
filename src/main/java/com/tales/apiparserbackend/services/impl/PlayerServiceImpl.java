@@ -51,10 +51,6 @@ public class PlayerServiceImpl implements PlayerService{
 		return Optional.ofNullable(this.playerRepository.findPlayerByName(name));
 	}
 
-	public static Logger getLog() {
-		return log;
-	}
-
 	@Override
 	public Player persistir(Player player) {
 		log.info("Persisting player : {}", player);
@@ -71,5 +67,9 @@ public class PlayerServiceImpl implements PlayerService{
 		}
 		return playersPersisted;
 	}
-	
+
+	public static Logger getLog() {
+		return log;
+	}
+
 }
