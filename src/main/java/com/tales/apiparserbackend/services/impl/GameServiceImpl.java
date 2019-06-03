@@ -1,20 +1,19 @@
 package com.tales.apiparserbackend.services.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tales.apiparserbackend.entities.Game;
+import com.tales.apiparserbackend.entities.Player;
 import com.tales.apiparserbackend.repositories.GameRepository;
 import com.tales.apiparserbackend.services.GameService;
 
@@ -25,6 +24,18 @@ public class GameServiceImpl implements GameService{
 	
 	@Autowired
 	private GameRepository gameRepository;
+	
+	@Autowired
+	private PlayerServiceImpl playerService = getPlayerService();
+	
+	@Autowired
+	private LogParserServiceImpl logService;
+	
+	private List<Game> gameList;
+	
+	private List<Player> playerList;
+	
+	private HashMap<Integer, Player> playerMap;
 	
 	@Override
 	public Optional<List<Game>> findAllGames() {
@@ -58,5 +69,34 @@ public class GameServiceImpl implements GameService{
 		return gamesPersisted;
 		
 	}
-
+	
+	public void doParser() {
+		log.info("Parsing file...");
+		this.logService.doParser();
+		log.info("Persisting games...");
+		this.setGameList();
+		for(Game game : this.gameList) {
+			this.persistir(game);
+		}
+		log.info("Persisting players...");
+		this.setPlayerList();
+		for(Player player : this.playerList) {
+			System.out.println(player.toString());
+			this.playerService.persistir(player);
+		}
+		
+	}
+		
+	public void setGameList() {
+		this.gameList = logService.getLogParser().getGameList();
+	}
+	
+	public void setPlayerList() {
+		this.playerList = this.logService.getLogParser().getPlayerList();
+	}
+	
+	@Bean
+	public PlayerServiceImpl getPlayerService() {
+		return new PlayerServiceImpl();
+	}
 }

@@ -3,11 +3,9 @@ package com.tales.apiparserbackend.services.impl;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
 import com.tales.apiparserbackend.services.LogParserService;
 import com.tales.apiparserbackend.utils.LogParserUtils;
 
@@ -19,6 +17,9 @@ public class LogParserServiceImpl implements LogParserService{
 	
 	@Autowired
 	private FileReaderUtilsServiceImpl fileReader;
+	
+	@Autowired
+	private GameServiceImpl gameService;
 	
 	@Override
 	public void doParser() {
@@ -57,6 +58,14 @@ public class LogParserServiceImpl implements LogParserService{
 	@Bean
 	public LogParserUtils logParser() {
 		return new LogParserUtils();
+	}
+
+	public GameServiceImpl getGameService() {
+		return gameService;
+	}
+
+	public void setGameService(GameServiceImpl gameService) {
+		this.gameService = gameService;
 	}
 
 }

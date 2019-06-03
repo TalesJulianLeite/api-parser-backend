@@ -5,30 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
-import com.tales.apiparserbackend.services.impl.GameServiceImpl;
-import com.tales.apiparserbackend.services.impl.PlayerServiceImpl;
 
 public class LogParserUtils {
 	
 	private static final Logger log = LoggerFactory.getLogger(LogParserUtils.class);
-	
-	@Autowired
-	private PlayerServiceImpl playerService = this.getPlayerService();
-	
-	@Autowired
-	private GameServiceImpl gameService = this.getGameService();
 	
 	private List<Game> games;
 	private int id_game;
 	private int total_kills;
 	private int id_client = 0;
 	private boolean game_shutdown;
+	private List<Player> playersGame;
 	private List<Player> players;
 	private Matcher matchPlayer;
 	HashMap<Integer, Player> mapPlayers;
@@ -37,33 +30,25 @@ public class LogParserUtils {
 		this.games = new ArrayList<Game>();
 		this.id_game = 0;
 		this.total_kills = 0;
-		this.players = null;
+		this.players = new ArrayList<Player>();
+		this.playersGame = new ArrayList<Player>();
 		this.mapPlayers = null;
 	}
 	
-	public LogParserUtils(List<Game> games) {
-		this.games = games;
-		this.id_game = 0;
-		this.total_kills = 0;
-		this.players = null;
-		this.mapPlayers = null;
-	}
-	
-	
+
 	//Do parser of log's archive
 	public void parserLog(String line) {
 		//Verify if game start and create a new Game
         if(line.contains("InitGame:")){
         		total_kills = 0;
 	        	mapPlayers = new HashMap<>();
-	        	players = new ArrayList<Player>();
+	        	playersGame = new ArrayList<Player>();
 	        	id_game++;
 	        	Game game = new Game();
 	        	game.setNumber(id_game);
 	        	game.setGame_shutdown(false);
 	        	game.setPlayers(players);
 	        	game.setTotal_kills(0);
-	        	this.gameService.persistir(game);
 	        	this.games.add(game);
         }
         else if(line.contains("ClientUserinfoChanged:")) {
@@ -123,11 +108,13 @@ public class LogParserUtils {
         else if(line.contains("ShutdownGame:") || line.contains("-------------")){
         	if(mapPlayers != null) {
         		setListPlayers();
-        		games.get(id_game-1).setPlayers(players);
+        		for(Player player : playersGame) {
+        			this.players.add(player);
+        			System.out.println(player);
+        		}
+        		games.get(id_game-1).setPlayers(playersGame);
         		games.get(id_game-1).setTotal_kills(total_kills);
-        		Game game = new Game();
-        		game = games.get(id_game-1);
-        		gameService.persistir(game);
+        		
         	}
         }
 	}
@@ -180,8 +167,7 @@ public class LogParserUtils {
 			for(@SuppressWarnings("rawtypes") Map.Entry p : this.mapPlayers.entrySet()) {
 				Player player = (Player) p.getValue();
 				player.setGame(this.games.get(id_game-1));
-				this.players.add(player);
-        		playerService.persistir(player);
+				this.playersGame.add(player);
 			}
 			this.games.get(id_game-1).setGame_shutdown(true);
 		}
@@ -226,18 +212,17 @@ public class LogParserUtils {
 		this.game_shutdown = game_shutdown;
 	}
 
+	
 
 	public static Logger getLog() {
 		return log;
 	}
-	
-	@Bean
-	public GameServiceImpl getGameService() {
-		return new GameServiceImpl();
+
+	public List<Player> getPlayerList(){
+		return this.players; 
 	}
 	
-	@Bean
-	public PlayerServiceImpl getPlayerService() {
-		return new PlayerServiceImpl();
+	public List<Game> getGameList(){
+		return this.games;
 	}
 }

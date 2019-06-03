@@ -3,24 +3,20 @@ package com.tales.apiparserbackend.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-//import com.fasterxml.jackson.annotation.JsonGetter;
 import com.tales.apiparserbackend.dtos.GameDto;
 import com.tales.apiparserbackend.dtos.PlayerDto;
 import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
 import com.tales.apiparserbackend.responses.ResponseGames;
 import com.tales.apiparserbackend.services.impl.GameServiceImpl;
-import com.tales.apiparserbackend.services.impl.LogParserServiceImpl;
 
 @RestController
 @RequestMapping("/")
@@ -32,21 +28,19 @@ public class GameController {
 	@Autowired
 	private GameServiceImpl gameService;
 	
-	@Autowired
-	private LogParserServiceImpl logService;
-	
 	/**
 	 * Return a list of games
 	 * 
 	 * @return ResponseEntity<Response<GameDto>>
 	 */
-	@RequestMapping(value = "/games", method = RequestMethod.GET)
+	@GetMapping(value = "/games")
 	public ResponseEntity<ResponseGames<GameDto>> findGames() {
-		log.info("Parsing file...");
-		this.logService.doParser();
+		log.info("Parsing log file...");
+		gameService.doParser();
 		log.info("Searching games");
 		ResponseGames<GameDto> response = new ResponseGames<GameDto>();
 		Optional<List<Game>> games = gameService.findAllGames();
+//		Optional<List<Game>> games = gameService.findGameByNumber(number);
 		Optional<List<GameDto>> gamesDto = games.map(obj -> converterGameDto(obj)); 
 		if (!gamesDto.isPresent()) {
 			log.info("Games not find");

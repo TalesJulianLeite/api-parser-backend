@@ -1,7 +1,6 @@
 package com.tales.apiparserbackend;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,6 @@ import com.tales.apiparserbackend.controllers.GameController;
 		+ "com.tales.apiparserbackend.services.impl", "com.tales.apiparserbackend.utils"})
 @EntityScan("com.tales.apiparserbackend.entities")
 @EnableJpaRepositories("com.tales.apiparserbackend.repositories")
-@EnableAutoConfiguration
 public class ApiParserBackendApplication {
 
 	public static void main(String[] args) {
