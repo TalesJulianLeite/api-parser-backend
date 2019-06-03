@@ -22,7 +22,7 @@ import com.tales.apiparserbackend.repositories.GameRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class GameServiceTest {
+public class GameServiceImplTest {
 
 	@MockBean
 	private GameRepository gameRepository;

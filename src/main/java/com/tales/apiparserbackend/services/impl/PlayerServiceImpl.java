@@ -53,6 +53,7 @@ public class PlayerServiceImpl implements PlayerService{
 
 	@Override
 	public Player persistir(Player player) {
+		player.toString();
 		log.info("Persisting player : {}", player);
 		return this.playerRepository.save(player);
 	}

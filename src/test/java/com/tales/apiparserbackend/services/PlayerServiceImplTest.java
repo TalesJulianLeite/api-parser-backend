@@ -22,7 +22,7 @@ import com.tales.apiparserbackend.repositories.PlayerRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class PlayerServiceTest {
+public class PlayerServiceImplTest {
 
 
 	@MockBean

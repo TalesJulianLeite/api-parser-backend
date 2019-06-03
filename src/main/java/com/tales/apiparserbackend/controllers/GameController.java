@@ -3,14 +3,17 @@ package com.tales.apiparserbackend.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.annotation.JsonGetter;
+
+//import com.fasterxml.jackson.annotation.JsonGetter;
 import com.tales.apiparserbackend.dtos.GameDto;
 import com.tales.apiparserbackend.dtos.PlayerDto;
 import com.tales.apiparserbackend.entities.Game;
@@ -21,6 +24,7 @@ import com.tales.apiparserbackend.services.impl.LogParserServiceImpl;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*")
 public class GameController {
 	
 	private static final Logger log = LoggerFactory.getLogger(GameController.class);
@@ -32,12 +36,11 @@ public class GameController {
 	private LogParserServiceImpl logService;
 	
 	/**
-	 * Retorns a list of games
+	 * Return a list of games
 	 * 
 	 * @return ResponseEntity<Response<GameDto>>
 	 */
-	@GetMapping("/games")
-	@JsonGetter
+	@RequestMapping(value = "/games", method = RequestMethod.GET)
 	public ResponseEntity<ResponseGames<GameDto>> findGames() {
 		log.info("Parsing file...");
 		this.logService.doParser();

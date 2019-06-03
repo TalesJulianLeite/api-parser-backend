@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Bean;
 import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
 import com.tales.apiparserbackend.services.impl.GameServiceImpl;
@@ -20,10 +19,10 @@ public class LogParserUtils {
 	private static final Logger log = LoggerFactory.getLogger(LogParserUtils.class);
 	
 	@Autowired
-	private PlayerServiceImpl playerService;
+	private PlayerServiceImpl playerService = this.getPlayerService();
 	
 	@Autowired
-	private GameServiceImpl gameService;
+	private GameServiceImpl gameService = this.getGameService();
 	
 	private List<Game> games;
 	private int id_game;
@@ -35,7 +34,7 @@ public class LogParserUtils {
 	HashMap<Integer, Player> mapPlayers;
 	
 	public LogParserUtils() {
-		this.games = null;
+		this.games = new ArrayList<Game>();
 		this.id_game = 0;
 		this.total_kills = 0;
 		this.players = null;
@@ -64,6 +63,7 @@ public class LogParserUtils {
 	        	game.setGame_shutdown(false);
 	        	game.setPlayers(players);
 	        	game.setTotal_kills(0);
+	        	this.gameService.persistir(game);
 	        	this.games.add(game);
         }
         else if(line.contains("ClientUserinfoChanged:")) {
@@ -178,8 +178,10 @@ public class LogParserUtils {
 	public void setListPlayers() {
 		if(!this.games.get(id_game-1).isGame_shutdown()) {
 			for(@SuppressWarnings("rawtypes") Map.Entry p : this.mapPlayers.entrySet()) {
-				this.players.add((Player) p.getValue());
-        		playerService.persistir((Player) p.getValue());
+				Player player = (Player) p.getValue();
+				player.setGame(this.games.get(id_game-1));
+				this.players.add(player);
+        		playerService.persistir(player);
 			}
 			this.games.get(id_game-1).setGame_shutdown(true);
 		}
@@ -227,5 +229,15 @@ public class LogParserUtils {
 
 	public static Logger getLog() {
 		return log;
+	}
+	
+	@Bean
+	public GameServiceImpl getGameService() {
+		return new GameServiceImpl();
+	}
+	
+	@Bean
+	public PlayerServiceImpl getPlayerService() {
+		return new PlayerServiceImpl();
 	}
 }

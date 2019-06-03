@@ -3,6 +3,7 @@ package com.tales.apiparserbackend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 import com.tales.apiparserbackend.controllers.GameController;
 import com.tales.apiparserbackend.services.impl.FileReaderUtilsServiceImpl;
 import com.tales.apiparserbackend.services.impl.LogParserServiceImpl;

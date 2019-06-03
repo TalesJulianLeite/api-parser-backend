@@ -80,9 +80,8 @@ public class Player implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Player [name=" + name + ", kills=" + kills + "]";
+		return "Player [id=" + id + ", number=" + number + ", name=" + name + ", kills=" + kills + ", game=" + game
+				+ "]";
 	}
-
-	
 
 }
