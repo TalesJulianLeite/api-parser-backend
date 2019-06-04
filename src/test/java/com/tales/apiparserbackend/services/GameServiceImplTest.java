@@ -48,8 +48,8 @@ public class GameServiceImplTest {
 	
 	@Test
 	public void testSearchAllGames() {
-		Optional<List<Game>> games = this.gameService.findAllGames();
-		assertTrue(games.isPresent());
+		List<Game> games = this.gameService.findAllGames();
+		assertNotNull(games);
 	}
 	
 	

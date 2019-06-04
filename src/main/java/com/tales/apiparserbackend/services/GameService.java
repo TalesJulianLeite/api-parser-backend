@@ -10,7 +10,7 @@ public interface GameService {
 	 * Return all games
 	 * @return
 	 */
-	Optional<List<Game>> findAllGames();
+	List<Game> findAllGames();
 	
 	/**
 	 * Return game by number

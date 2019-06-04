@@ -2,30 +2,12 @@ package com.tales.apiparserbackend.dtos;
 
 public class PlayerDto {
 	
-	private Long id;
-	private Integer number;
 	private String name;
 	private Integer kills;
 
 
 	public PlayerDto() {
 
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getNumber() {
-		return number;
-	}
-
-	public void setNumber(Integer player_number) {
-		this.number = player_number;
 	}
 
 	public String getName() {

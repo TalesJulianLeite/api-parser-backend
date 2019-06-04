@@ -3,7 +3,6 @@ package com.tales.apiparserbackend.services.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -12,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import com.tales.apiparserbackend.dtos.GameDto;
+import com.tales.apiparserbackend.dtos.PlayerDto;
 import com.tales.apiparserbackend.entities.Game;
 import com.tales.apiparserbackend.entities.Player;
 import com.tales.apiparserbackend.repositories.GameRepository;
@@ -38,9 +39,9 @@ public class GameServiceImpl implements GameService{
 	private HashMap<Integer, Player> playerMap;
 	
 	@Override
-	public Optional<List<Game>> findAllGames() {
+	public List<Game> findAllGames() {
 		log.info("Searching all games");
-		return Optional.ofNullable(gameRepository.findAll());
+		return gameRepository.findAll();
 	}
 
 	@Override
@@ -98,5 +99,30 @@ public class GameServiceImpl implements GameService{
 	@Bean
 	public PlayerServiceImpl getPlayerService() {
 		return new PlayerServiceImpl();
+	}
+
+	public HashMap<Integer, Player> getPlayerMap() {
+		return playerMap;
+	}
+
+	public void setPlayerMap(HashMap<Integer, Player> playerMap) {
+		this.playerMap = playerMap;
+	}
+	
+	public GameDto converterGameDto(Game game) {
+		List<PlayerDto> playersDto = new ArrayList<>();
+		GameDto gameDto = new GameDto();
+		gameDto.setGame_(game.getId());
+//		gameDto.setNumber(game.getNumber());
+		gameDto.setTotal_kills(game.getTotal_kills());
+		for(Player player : game.getPlayers()) {
+			PlayerDto playerDto = new PlayerDto();
+			playerDto.setName(player.getName());
+			playerDto.setKills(player.getKills());
+			playersDto.add(playerDto);
+		}
+		gameDto.setPlayers(playersDto);
+		
+		return gameDto;
 	}
 }
