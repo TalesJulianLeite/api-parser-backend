@@ -28,7 +28,7 @@ public class PlayerDto {
 
 	@Override
 	public String toString() {
-		return name + ", kills=" + kills + "]";
+		return name + ", kills = " + kills + "]";
 	}
 
 

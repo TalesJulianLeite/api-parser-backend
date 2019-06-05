@@ -1,34 +1,43 @@
 package com.tales.apiparserbackend.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.tales.apiparserbackend.controllers.GameController;
-import com.tales.apiparserbackend.entities.Game;
+import com.tales.apiparserbackend.services.impl.GameServiceImpl;
 
 public class GameControllerTest {
 	@LocalServerPort
-    private static final int port = 8080;
+	private static final int port = 8080;
 
-    @Autowired
-    private GameController gameController;
-    
-    @Before
-    public void setUp() throws Exception{
-    	
-    }
+	@Autowired
+	private MockMvc mvc;
 
-    @Test
-    public void greetingShouldReturnDefaultMessage() throws Exception {
-    	Game game = new Game();
-    	extracted(game).setId(21L);
-    	extracted(game).setTotal_kills(131);
-        assert(gameController.getAllGames().contains(extracted(game)));
-    }
+	
+	@MockBean
+	private GameServiceImpl gameService;
 
-	private Game extracted(Game game) {
-		return game;
+	@Before
+	public void setUp() throws Exception {
+
 	}
+
+	
+	@Test
+	public void testBuscarEmpresaCnpjInvalido() throws Exception {
+		BDDMockito.given(this.gameService.findAllGames());
+		
+		mvc.perform(MockMvcRequestBuilders.get("localhost:8080/all/games").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errors").value("Games not find"));
+	}
+
 }

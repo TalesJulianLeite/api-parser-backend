@@ -17,6 +17,6 @@ public class ParserServiceImplTest {
 	private LogParserUtils logParser;
 	
 	@Autowired
-	private LogParseService parserService;
+	private LogParserService parserService;
 	
 }
