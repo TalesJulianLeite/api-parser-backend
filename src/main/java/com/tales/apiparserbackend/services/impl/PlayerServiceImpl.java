@@ -31,11 +31,6 @@ public class PlayerServiceImpl implements PlayerService{
 		return Optional.ofNullable(playerRepository.findPlayersByGameNumber(gameNumber));
 	}
 
-	@Override
-	public Optional<Player> findPlayerByGameNumber(Integer number, Integer pNumber) {
-		log.info("Searching players : {} " + pNumber + " of game number : {}", number);
-		return Optional.ofNullable(playerRepository.findPlayerByGameNumber(number, pNumber));
-	}
 
 	@Override
 	public Optional<Player> findPlayerByNumber(Integer number) {

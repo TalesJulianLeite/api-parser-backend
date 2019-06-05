@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.tales.apiparserbackend.entities.Player;
 import com.tales.apiparserbackend.repositories.PlayerRepository;
 
@@ -24,46 +23,42 @@ import com.tales.apiparserbackend.repositories.PlayerRepository;
 @ActiveProfiles("test")
 public class PlayerServiceImplTest {
 
-
 	@MockBean
 	private PlayerRepository playerRepository;
 
 	@Autowired
 	private PlayerService playerService;
-	
+
 	private static final Integer number = 2;
-	
+
+	private static final String name = "Mal";
+
 	private static final Integer gameNumber = 4;
-	
-	private static final String name = "Isgalamido";
-	
+
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() throws Exception {
 		BDDMockito.given(this.playerRepository.findPlayerByNumber(Mockito.anyInt())).willReturn(new Player());
-		BDDMockito.given(this.playerRepository.findPlayerByName(Mockito.anyString())).willReturn(new Player());
 		BDDMockito.given(this.playerRepository.findAll(Mockito.anyList())).willReturn(new ArrayList<Player>());
+		BDDMockito.given(this.playerRepository.findPlayerByName(Mockito.anyString())).willReturn(new Player());
+		BDDMockito.given(this.playerRepository.findPlayersByGameNumber(Mockito.anyInt())).willReturn(new ArrayList<Player>());
 		BDDMockito.given(this.playerRepository.save(Mockito.any(Player.class))).willReturn(new Player());
 	}
 
 	@Test
-	public void testSearchPlayerByNumber() {
+	public void testSearchGameByNumber() {
 		Optional<Player> player = this.playerService.findPlayerByNumber(number);
 		assertTrue(player.isPresent());
 	}
-	
+
 	@Test
-	public void testSearchPlayerByName() {
-		Optional<Player> player = this.playerService.findPlayerByName(name);
-		assertTrue(player.isPresent());
+	public void testSearchAllGames() {
+		Optional<List<Player>> players = this.playerService.findAllPlayers();
+		assertNotNull(players);
+		assertTrue(players.isPresent());
 	}
-	
-	@Test
-	public void testSearchAllPlayers() {
-		Optional<List<Player>> player = this.playerService.findAllPlayers();
-		assertTrue(player.isPresent());
-	}
-	
+
+
 	@Test
 	public void testPersistPlayer() {
 		Player player = this.playerService.persistir(new Player());
@@ -75,4 +70,8 @@ public class PlayerServiceImplTest {
 		return gameNumber;
 	}
 
+	public static String getName() {
+		return name;
+	}
 }
+

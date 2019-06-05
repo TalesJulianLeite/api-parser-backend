@@ -52,8 +52,14 @@ public class GameServiceImpl implements GameService{
 
 	@Override
 	public Game persistir(Game game) {
+		log.info("Removing list");
+		this.deleteAll();
 		log.info("Persisting game : {}", game);
 		return this.gameRepository.save(game);
+	}
+	
+	public void deleteAll() {
+		gameRepository.deleteAll();
 	}
 	
 	public static Logger getLog() {

@@ -20,14 +20,6 @@ public interface PlayerService {
 	Optional<List<Player>> findPlayersByGameNumber(Integer gameNumber);
 	
 	/**
-	 * Return player by game number and player number
-	 * @param number
-	 * @param pNumber
-	 * @return
-	 */
-	Optional<Player> findPlayerByGameNumber(Integer number, Integer pNumber);
-	
-	/**
 	 * Return player by number
 	 * @param number
 	 * @return
