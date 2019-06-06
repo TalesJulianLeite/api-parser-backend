@@ -46,4 +46,4 @@ dentro do diretório e o arquivo de log deverá estar nomeado como "games.log";
 - Acesse o navegador, de preferência o Google Chrome e acesse a URL http:\\localhost:8080\all\games
 - Aguarde o retorno da requisição com os dados do log.
 - Para que a aplicação retorne 
-- Para melhor visualizaçãoda do Json retornado, realize a requisição utilizando o Postman.
+- Para melhor visualização da do Json retornado, realize a requisição utilizando o Postman.
