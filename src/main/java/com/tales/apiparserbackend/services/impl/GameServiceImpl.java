@@ -57,7 +57,9 @@ public class GameServiceImpl implements GameService{
 	}
 	
 	public void deleteAll() {
-		gameRepository.deleteAll();
+		if(this.gameList != null) {
+			gameRepository.deleteAll();
+		}
 	}
 	
 	public static Logger getLog() {
@@ -76,6 +78,8 @@ public class GameServiceImpl implements GameService{
 	}
 	
 	public void doParser() {
+		this.playerService.deletePlayers();
+		this.deleteAll();
 		log.info("Parsing file...");
 		this.logService.doParser();
 		log.info("Persisting games...");

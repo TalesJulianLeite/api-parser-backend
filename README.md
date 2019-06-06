@@ -29,7 +29,7 @@ dentro do diretório e o arquivo de log deverá estar nomeado como "games.log";
 - A api realiza a leitura do arquivo de log, realiza o parser de seus dados e retorna a lista
 	de cada game com seus respectivos players e kills de cada player no game, a quantidade de kills de cada player e a quantidade total de kills do game;
 
-- A solução realizada foi a seguinte:
+- A solução realizada implementada foi a seguinte:
 	- Inicialmente na request get foi chamado o método para deletar, no caso de várias 
 	- Como não foi especificado o modo de importação do arquivo, não foi feito um método para a importação do mesmo, que
 	é importado pela api quando uma requisição de reposta do log é realizada;
@@ -44,4 +44,6 @@ dentro do diretório e o arquivo de log deverá estar nomeado como "games.log";
 - Tendo o jdk ou jre 1.8 ou superior e o maven instalado na máquina do teste, acesso o diretório da aplicação na máquina, 
 	abra o cmd e execute o comando "mvn spring-boot: run";
 - Acesse o navegador, de preferência o Google Chrome e acesse a URL http:\\localhost:8080\all\games
-- Aguarde o retorno da requisição com os dados do log
+- Aguarde o retorno da requisição com os dados do log.
+- Para que a aplicação retorne 
+- Para melhor visualizaçãoda do Json retornado, realize a requisição utilizando o Postman.

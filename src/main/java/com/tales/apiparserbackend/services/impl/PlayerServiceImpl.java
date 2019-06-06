@@ -49,6 +49,15 @@ public class PlayerServiceImpl implements PlayerService{
 		log.info("Persisting player : {}", player);
 		return this.playerRepository.save(player);
 	}
+	
+	public void deletePlayers() {
+		List<Player> players;
+		log.info("Deleting players : {}");
+		players = playerRepository.findAll();
+		if(players != null) {
+			playerRepository.deleteAll();
+		}
+	}
 
 	@Override
 	public List<Player> persistAllPlayers(List<Player> players) {
